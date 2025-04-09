@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POC Détection de position - MediaPipe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="left" class="zone" style="background-color: white;">Gauche</div>
+  <div id="middle" class="zone" style="background-color: white;">Milieu</div>
+  <div id="right" class="zone" style="background-color: white;">Droite</div>
+
+  <video id="videoElement" autoplay muted playsinline></video>
+  <canvas class="output_canvas" id="videoCanvas"></canvas>
+
+  <!-- Importation des scripts MediaPipe -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.min.js"></script>
+
+  <script src="script.js">
+
+  </script>
+</body>
+</html>
