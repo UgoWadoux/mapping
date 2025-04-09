@@ -14,13 +14,27 @@
 
   <video id="videoElement" autoplay muted playsinline></video>
   <canvas class="output_canvas" id="videoCanvas"></canvas>
+  <h1>Test OSC vers MadMapper</h1>
+  <button onclick="sendOSC('/zone/1')">Zone 1</button>
+  <button onclick="sendOSC('/zone/2')">Zone 2</button>
+  <button onclick="sendOSC('/zone/3')">Zone 3</button>
 
+  <script>
+    const socket = new WebSocket("ws://localhost:8080");
+
+    function sendOSC(address) {
+      const message = { address };
+      socket.send(JSON.stringify(message));
+      console.log("Message envoyé:", message);
+    }
+  </script>
   <!-- Importation des scripts MediaPipe -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose@0.5/pose.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.min.js"></script>
 
   <script src="script.js">
+
 
   </script>
 </body>

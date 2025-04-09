@@ -2,7 +2,7 @@
 const socket = new WebSocket("ws://localhost:8080");
 
 // Exemple d’envoi :
-function envoyerOSC(zone) {
+function sendOSC(zone) {
     socket.send(JSON.stringify({
         address: `/zone/${zone}`
     }));
@@ -66,6 +66,8 @@ pose.onResults((results) => {
 
         if (x < 0.33) {
             rightZone.style.backgroundColor = "blue";
+            sendOSC(1);
+            
         } else if (x < 0.66) {
             middleZone.style.backgroundColor = "blue";
             faceCanvas.style.display = "block";
@@ -79,8 +81,10 @@ pose.onResults((results) => {
             faceCtx.scale(-1, 1);                   // puis on inverse l’axe X
             faceCtx.drawImage(videoElement, sx, sy, faceSize, faceSize, 0, 0, faceSize, faceSize);
             faceCtx.restore();
+            sendOSC(2);
         } else {
             leftZone.style.backgroundColor = "blue";
+            sendOSC(3)
         }
     }
 
