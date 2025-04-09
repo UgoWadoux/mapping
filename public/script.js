@@ -1,4 +1,18 @@
 
+const socket = new WebSocket("ws://localhost:8080");
+
+// Exemple d’envoi :
+function envoyerOSC(zone) {
+    socket.send(JSON.stringify({
+        address: `/zone/${zone}`
+    }));
+}
+
+// Dans ta détection centrale :
+if (x < 0.66 && x > 0.33) {
+    envoyerOSC(2);
+}
+
 const videoElement = document.getElementById('videoElement');
 const videoCanvas = document.getElementById('videoCanvas');
 const canvasCtx = videoCanvas.getContext('2d');
