@@ -14,8 +14,8 @@
   <video id="videoElement" autoplay muted playsinline></video>
   <canvas class="output_canvas" id="videoCanvas"></canvas>
   <h1>Test OSC vers MadMapper</h1>
-  <button onclick="sendOSC(1)">Zone 1 - Play</button>
-  <button onclick="sendOSC(2)">Zone 1 - Stop</button>
+  <button onclick="sendOSC(1, 'play')">Zone 1 - Play</button>
+  <button onclick="sendOSC(1, 'stop')">Zone 1 - Stop</button>
   <script>
     const socket = new WebSocket("ws://localhost:8080");
 
