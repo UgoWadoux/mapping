@@ -1,17 +1,13 @@
 
 const socket = new WebSocket("ws://localhost:8080");
 
-// Exemple d’envoi :
-function sendOSC(zone) {
-    socket.send(JSON.stringify({
-        address: `/zone/${zone}`
-    }));
-}
+function sendOSC(zone, action = null) {
+    const address = action ? `/zone${zone}/${action}` : `/zone/${zone}`;
+    const message = { address };
+    socket.send(JSON.stringify(message));
+    console.log("Message envoyé:", message);
+  }
 
-// Dans ta détection centrale :
-if (x < 0.66 && x > 0.33) {
-    envoyerOSC(2);
-}
 
 const videoElement = document.getElementById('videoElement');
 const videoCanvas = document.getElementById('videoCanvas');
@@ -66,7 +62,9 @@ pose.onResults((results) => {
 
         if (x < 0.33) {
             rightZone.style.backgroundColor = "blue";
-            sendOSC(1);
+            sendOSC(1, 'play');
+            sendOSC(2, 'stop');
+            sendOSC(3, 'stop');
             
         } else if (x < 0.66) {
             middleZone.style.backgroundColor = "blue";
@@ -81,11 +79,15 @@ pose.onResults((results) => {
             faceCtx.scale(-1, 1);                   // puis on inverse l’axe X
             faceCtx.drawImage(videoElement, sx, sy, faceSize, faceSize, 0, 0, faceSize, faceSize);
             faceCtx.restore();
-            sendOSC(2);
-        } else {
+            sendOSC(1, 'stop');
+            sendOSC(2, 'play');
+            sendOSC(3, 'stop');       
+         } else {
             leftZone.style.backgroundColor = "blue";
-            sendOSC(3)
-        }
+            sendOSC(1, 'stop');
+            sendOSC(2, 'stop');
+            sendOSC(3, 'play');        
+         }
     }
 
     canvasCtx.restore();
