@@ -16,6 +16,10 @@
   <h1>Test OSC vers MadMapper</h1>
   <button onclick="sendOSC(1, 'play')">Zone 1 - Play</button>
   <button onclick="sendOSC(1, 'stop')">Zone 1 - Stop</button>
+  <button onclick="sendOSC(2, 'play')">Zone 2 - Play</button>
+  <button onclick="sendOSC(2, 'stop')">Zone 2 - Stop</button>
+  <button onclick="sendOSC(3, 'play')">Zone 3 - Play</button>
+  <button onclick="sendOSC(3, 'stop')">Zone 3 - Stop</button>
   <script>
     const socket = new WebSocket("ws://localhost:8080");
 
