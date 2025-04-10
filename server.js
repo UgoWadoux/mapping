@@ -17,8 +17,8 @@ console.log('WebSocket server on ws://localhost:8080');
 const udpPort = new osc.UDPPort({
     localAddress: '0.0.0.0',
     localPort: 57121,
-    remoteAddress: '127.0.0.1',
-    remotePort: 8000, // Port MadMapper écoute
+    remoteAddress: '192.168.1.24',
+    remotePort: 8081, // Port MadMapper écoute
 });
 
 udpPort.open();
