@@ -6,7 +6,7 @@ function sendOSC(zone, action = null) {
     const message = { address };
     socket.send(JSON.stringify(message));
     console.log("Message envoyé:", message);
-  }
+}
 
 
 const videoElement = document.getElementById('videoElement');
@@ -48,48 +48,62 @@ pose.setOptions({
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5,
 });
+let currentZone = null;
 
 pose.onResults((results) => {
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, videoCanvas.width, videoCanvas.height);
     canvasCtx.drawImage(results.image, 0, 0, videoCanvas.width, videoCanvas.height);
-
+    
     if (results.poseLandmarks) {
         const nose = results.poseLandmarks[0];
         const x = nose.x;
-
-        clearZones();
-
-        if (x < 0.33) {
-            rightZone.style.backgroundColor = "blue";
-            sendOSC(1, 'play');
-            sendOSC(2, 'stop');
-            sendOSC(3, 'stop');
-            
+        let newZone = null;
+        
+        if (x <0.33){
+            newZone = 1;
         } else if (x < 0.66) {
-            middleZone.style.backgroundColor = "blue";
-            faceCanvas.style.display = "block";
-
+            newZone = 2;
             const sx = nose.x * videoElement.videoWidth - faceSize/2;
             const sy = nose.y * videoElement.videoHeight -  faceSize/2;
-
+            
             faceCtx.clearRect(0, 0, faceSize, faceSize);
             faceCtx.save();
             faceCtx.translate(faceSize, 0);              // on déplace le point (0, 0) à droite du canvas
             faceCtx.scale(-1, 1);                   // puis on inverse l’axe X
             faceCtx.drawImage(videoElement, sx, sy, faceSize, faceSize, 0, 0, faceSize, faceSize);
             faceCtx.restore();
-            sendOSC(1, 'stop');
-            sendOSC(2, 'play');
-            sendOSC(3, 'stop');       
-         } else {
-            leftZone.style.backgroundColor = "blue";
-            sendOSC(1, 'stop');
-            sendOSC(2, 'stop');
-            sendOSC(3, 'play');        
-         }
+        } else {
+            newZone = 3;
+        }
+        if (newZone !== currentZone) {
+            currentZone = newZone
+            clearZones();
+            
+            if (newZone == 1) {
+                rightZone.style.backgroundColor = "blue";
+                sendOSC(1, 'play');
+                sendOSC(2, 'stop');
+                sendOSC(3, 'stop');
+                
+            } else if (newZone == 2) {
+                middleZone.style.backgroundColor = "blue";
+                faceCanvas.style.display = "block";
+                
+                
+                sendOSC(1, 'stop');
+                sendOSC(2, 'play');
+                sendOSC(2, 'toogleCamera')
+                sendOSC(3, 'stop');       
+            } else if (newZone == 3) {
+                leftZone.style.backgroundColor = "blue";
+                sendOSC(1, 'stop');
+                sendOSC(2, 'play');
+                sendOSC(3, 'play');         
+            }
+        }
     }
-
+    
     canvasCtx.restore();
 });
 
