@@ -19,6 +19,7 @@
   "homepage": "https://github.com/UgoWadoux/mapping#readme",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "osc": "^2.4.5",
     "ws": "^8.18.1"

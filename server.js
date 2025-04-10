@@ -1,6 +1,7 @@
 const express = require('express');
 const WebSocket = require('ws');
 const osc = require('osc');
+const dotenv = require('dotenv').config();
 
 const app = express();
 const PORT = 3000;
@@ -17,8 +18,8 @@ console.log('WebSocket server on ws://localhost:8080');
 const udpPort = new osc.UDPPort({
     localAddress: '0.0.0.0',
     localPort: 57121,
-    remoteAddress: '192.168.1.24',
-    remotePort: 8081, // Port MadMapper écoute
+    remoteAddress: process.env.OSC_REMOTE_ADDRESS,
+    remotePort: Number(process.env.OSC_REMOTE_PORT), // Port MadMapper écoute
 });
 
 udpPort.open();
